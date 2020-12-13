@@ -1,0 +1,25 @@
+---
+- hosts: all
+  become: true
+  become_user: root
+  tasks:
+    - name: Check for Yay
+      # check for failure to install yay [https://docs.ansible.com/ansible/latest/user_guide/playbooks_conditionals.html]
+      command: yay --version
+
+    - name: Checkout yay
+      git:
+        repo: 'https://aur.archlinux.org/yay.git'
+        dest: '/tmp/yay'
+
+    - name: Install yay
+      command: cd /tmp/yay && makepkg -si
+
+    - name: Installs packages
+      raw: yay -S nvim git docker tmux zsh curl sudo which htop
+
+    - name: Final greeting
+      pause:
+        seconds: 1
+        echo: false
+        prompt: "Don't worry about all the red above; if you made it here, your Vagrant VMs are probably fine !"
