@@ -5,6 +5,12 @@ main() {
   need_cmd ansible
   say "All requirements met"
   clone_dotphiles_repo
+  run_playbook
+}
+
+run_playbook() {
+  say "Running playbook"
+  ansible /tmp/dotphiles/Playbook.yaml
 }
 
 clone_dotphiles_repo() {
